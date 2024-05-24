@@ -1,15 +1,96 @@
-import { Text, View } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, Button, Text, FlatList, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Index() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+const App = () => {
+  const [input, setInput] = useState('');
+  const [journalEntries, setJournalEntries] = useState([]);
+
+  useEffect(() => {
+    const fetchEntries = async () => {
+      try {
+        const storedEntries = await AsyncStorage.getItem('@journal_entries');
+        if (storedEntries) {
+          setJournalEntries(JSON.parse(storedEntries));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchEntries();
+  }, []);
+
+  const handleSave = async () => {
+    const newEntry = {
+      id: Date.now().toString(),
+      content: input,
+      timestamp: new Date().toLocaleString(),
+    };
+    let updatedEntries = [...journalEntries, newEntry];
+
+    try {
+      await AsyncStorage.setItem('@journal_entries', JSON.stringify(updatedEntries));
+      setJournalEntries(updatedEntries);
+      setInput('');
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const renderEntry = ({ item }) => (
+    <View style={styles.entry}>
+      <Text style={styles.timestamp}>{item.timestamp}</Text>
+      <Text style={styles.content}>{item.content}</Text>
     </View>
   );
-}
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Write your journal entry"
+        value={input}
+        onChangeText={setInput}
+      />
+      <Button title="Save Entry" onPress={handleSave} />
+      <FlatList
+        data={journalEntries}
+        renderItem={renderEntry}
+        keyExtractor={(item) => item.id}
+        style={styles.list}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 12,
+    paddingHorizontal: 8,
+  },
+  list: {
+    marginTop: 20,
+  },
+  entry: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  timestamp: {
+    fontSize: 12,
+    color: 'gray',
+  },
+  content: {
+    fontSize: 16,
+  },
+});
+
+export default App;
