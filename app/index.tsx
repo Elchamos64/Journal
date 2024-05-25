@@ -2,16 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, Text, FlatList, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+type JournalEntry = {
+  id: string;
+  content: string;
+  timestamp: string;
+};
+
 const App = () => {
-  const [input, setInput] = useState('');
-  const [journalEntries, setJournalEntries] = useState([]);
+  const [input, setInput] = useState<string>('');
+  const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]);
 
   useEffect(() => {
     const fetchEntries = async () => {
       try {
         const storedEntries = await AsyncStorage.getItem('@journal_entries');
         if (storedEntries) {
-          setJournalEntries(JSON.parse(storedEntries));
+          setJournalEntries(JSON.parse(storedEntries) as JournalEntry[]);
         }
       } catch (e) {
         console.error(e);
@@ -22,12 +28,12 @@ const App = () => {
   }, []);
 
   const handleSave = async () => {
-    const newEntry = {
+    const newEntry: JournalEntry = {
       id: Date.now().toString(),
       content: input,
       timestamp: new Date().toLocaleString(),
     };
-    let updatedEntries = [...journalEntries, newEntry];
+    const updatedEntries = [...journalEntries, newEntry];
 
     try {
       await AsyncStorage.setItem('@journal_entries', JSON.stringify(updatedEntries));
@@ -38,7 +44,7 @@ const App = () => {
     }
   };
 
-  const renderEntry = ({ item }) => (
+  const renderEntry = ({ item }: { item: JournalEntry }) => (
     <View style={styles.entry}>
       <Text style={styles.timestamp}>{item.timestamp}</Text>
       <Text style={styles.content}>{item.content}</Text>
