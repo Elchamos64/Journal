@@ -1,50 +1,31 @@
-# Welcome to your Expo app 👋
+# Overview
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+The idea behind building this app was to help me understand the basics of `React Native` by building a journal app. The app is quite simple but I was able to acomplish my goals by buidling it. I was able to learn how to use the different react modules, how create an app using components and how to use expo to launch my app and test it.
 
-## Get started
+Bellow is a link for the app demonstration:
 
-1. Install dependencies
+[Journal App](https://www.youtube.com/watch?v=ExWHVhgwmRE)
 
-   ```bash
-   npm install
-   ```
+# Development Environment
 
-2. Start the app
+For the journal app I used VS code as my editior and JavaScript as the main programming lanaguage.
 
-   ```bash
-    npx expo start
-   ```
+You need to have the following tools intaled to launch this app:
+- `Node.js`
+- Install this package to save journal entries `npm install @react-native-async-storage/async-storage`
+- `Expo` to launch your app
 
-In the output, you'll find options to open the app in a
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+# Useful Websites
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Here is list of website that I used to get started on this project.
+* [Node.js](https://nodejs.org/en)
+* [Expo Go or Expo developer](https://docs.expo.dev/get-started/start-developing/)
+* [React Native tutorial](https://reactnative.dev/docs/getting-started)
 
-## Get a fresh project
+# Future Work
 
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+The app could use more functionalities. In the furture I would like to add the following features:
+* Use location when saving journal entries.
+* Set reminders to write in your journal
+* Be able to attach a picture or video
